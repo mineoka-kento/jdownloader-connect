@@ -1,6 +1,6 @@
 {
   "name": "jdownloader-connect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "JDownloader client for Node.js and Browser, written in TypeScript.",
   "keywords": [
     "jdownloader",
