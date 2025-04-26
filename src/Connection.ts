@@ -8,7 +8,7 @@ import {
 } from "./Crypto";
 import { ConnectResponse } from "./ResponseStructures";
 
-const MYJDOWNLOADER_ENPOINT = "https://api.jdownloader.org";
+const MYJDOWNLOADER_ENDPOINT = "https://api.jdownloader.org";
 
 export interface ConnectParams {
 	email: string;
@@ -67,7 +67,7 @@ export default async function createCallServerEnvironment({
 			)
 		);
 		const response = await fetch(
-			`${MYJDOWNLOADER_ENPOINT}${path}&signature=${signature}`,
+			`${MYJDOWNLOADER_ENDPOINT}${path}&signature=${signature}`,
 			{
 				method: "POST",
 				headers: {
@@ -130,7 +130,7 @@ export default async function createCallServerEnvironment({
 						deviceEncryptionToken
 					);
 					const response = await fetch(
-						`${MYJDOWNLOADER_ENPOINT}/t_${encodeURI(
+						`${MYJDOWNLOADER_ENDPOINT}/t_${encodeURI(
 							sessionToken
 						)}_${encodeURI(deviceId)}${query}`,
 						{
