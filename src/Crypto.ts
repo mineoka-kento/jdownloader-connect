@@ -38,7 +38,7 @@ export async function decrypt(
 				false,
 				["decrypt"]
 			),
-			Uint8Array.from<string>(atob(data), (m) => m.codePointAt(0) ?? NaN)
+			Uint8Array.from<string>(atob(data), (m) => m.codePointAt(0) ?? 0)
 				.buffer
 		)
 	);
