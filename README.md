@@ -10,7 +10,7 @@ npm i --save jdownloader-connect
 
 ## Usage
 
-```
+```ts
 import connectMyJDownloader from "jdownloader-connect";
 
 async function main() {
