@@ -1,0 +1,42 @@
+{
+  "name": "jdownloader-connect",
+  "version": "1.0.0",
+  "description": "JDownloader client for Node.js and Browser, written in TypeScript.",
+  "keywords": [
+    "jdownloader",
+    "jdownloader2",
+    "typescript",
+    "nodejs",
+    "browser"
+  ],
+  "author": "costeka",
+  "license": "MIT",
+  "homepage": "https://github.com/mineoka-kento/jdownloader-connect?tab=readme-ov-file#readme-ov-file",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mineoka-kento/jdownloader-connect.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mineoka-kento/jdownloader-connect/issues"
+  },
+  "files": ["dist", "package.json"],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "yarn@4.9.1"
+}
