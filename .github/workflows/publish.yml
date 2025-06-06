@@ -20,6 +20,9 @@ jobs:
         with:
           node-version: "lts/*"
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
@@ -52,6 +55,9 @@ jobs:
         with:
           node-version: "lts/*"
           registry-url: "https://registry.npmjs.org"
+
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path

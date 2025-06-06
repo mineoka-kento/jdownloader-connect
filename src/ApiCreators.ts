@@ -67,7 +67,7 @@ export function createMyJDownloaderApis(
 				sessiontoken: getSessionToken(),
 			});
 		},
-		async listDevices(): Promise<Device[]> {
+		async listDevices(): Promise<DeviceApis[]> {
 			const { list }: ListDevicesResponse = await callServer(
 				"/my/listdevices",
 				getServerEncryptionToken(),
@@ -75,14 +75,14 @@ export function createMyJDownloaderApis(
 					sessiontoken: getSessionToken(),
 				}
 			);
-			return list.map<Device>((device) =>
+			return list.map<DeviceApis>((device) =>
 				createDeviceApis({ createCallDeviceEnvironment }, device)
 			);
 		},
 	} as const;
 }
 
-export type Device = ReturnType<typeof createDeviceApis>;
+export type DeviceApis = ReturnType<typeof createDeviceApis>;
 function createDeviceApis(
 	{
 		createCallDeviceEnvironment,
