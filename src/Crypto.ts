@@ -5,8 +5,8 @@ export async function encrypt(
 	const iv = ivKey.slice(0, ivKey.byteLength / 2);
 	const key = ivKey.slice(ivKey.byteLength / 2, ivKey.byteLength);
 	return btoa(
-		String.fromCharCode(
-			...new Uint8Array(
+		Array.from(
+			new Uint8Array(
 				await crypto.subtle.encrypt(
 					{ name: "AES-CBC", iv, length: 128 },
 					await crypto.subtle.importKey(
@@ -18,8 +18,9 @@ export async function encrypt(
 					),
 					new TextEncoder().encode(data)
 				)
-			)
-		)
+			),
+			(byte) => String.fromCharCode(byte)
+		).join("")
 	);
 }
 export async function decrypt(
