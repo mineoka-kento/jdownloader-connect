@@ -1,6 +1,6 @@
 {
   "name": "jdownloader-connect",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "JDownloader client for Node.js and Browser, written in TypeScript.",
   "keywords": [
     "jdownloader",
@@ -25,16 +25,17 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/index.mjs"
     }
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "tsc": "tsc"
   },
   "devDependencies": {
     "tsup": "^8.4.0",

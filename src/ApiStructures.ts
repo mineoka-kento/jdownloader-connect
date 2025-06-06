@@ -1,10 +1,3 @@
-import connectMyJDownloader from "./index";
-
-export type Device = Awaited<
-	ReturnType<Awaited<ReturnType<typeof connectMyJDownloader>>["listDevices"]>
-> extends (infer T)[]
-	? T
-	: never;
 export const DEVICE_STATUS = {
 	UNKNOWN: "UNKNOWN",
 } as const;
