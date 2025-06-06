@@ -12,7 +12,6 @@
   "author": "costeka",
   "license": "MIT",
   "homepage": "https://github.com/mineoka-kento/jdownloader-connect?tab=readme-ov-file#readme-ov-file",
-  "private": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mineoka-kento/jdownloader-connect.git"
@@ -20,7 +19,10 @@
   "bugs": {
     "url": "https://github.com/mineoka-kento/jdownloader-connect/issues"
   },
-  "files": ["dist", "package.json"],
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "exports": {
     ".": {
       "require": "./dist/index.js",
