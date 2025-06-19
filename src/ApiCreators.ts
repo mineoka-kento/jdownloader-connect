@@ -8,7 +8,17 @@ import {
 	LinkCollectingJob,
 	PackageQuery,
 	FilePackage,
-} from ".";
+	SystemInfos,
+	StorageInfo,
+	RemoveLinksQuery,
+	ForceDownloadQuery,
+	SetEnabledQuery,
+	MoveToDownloadlistQuery,
+	StartDownloadsQuery,
+	MovePackagesQuery,
+	SetPriorityQuery,
+	CleanupQuery,
+} from "./ApiStructures";
 import createCallServerEnvironment, { ConnectParams } from "./Connection";
 import { createEncryptionToken } from "./Crypto";
 import {
@@ -118,6 +128,71 @@ function createDeviceApis(
 			options: PackageQuery = {}
 		): Promise<FilePackage[]> {
 			return callDevice("/downloadsV2/queryPackages", options);
+		},
+
+		// ### /device methods ###
+		async getSessionPublicKey(): Promise<string> {
+			return callDevice("/device/getSessionPublicKey");
+		},
+		async ping(): Promise<"pong"> {
+			return callDevice("/device/ping");
+		},
+
+		// ### /downloadsV2 methods ###
+		async downloadsSetEnabled(options: SetEnabledQuery): Promise<void> {
+			return callDevice("/downloadsV2/setEnabled", options);
+		},
+		async downloadsRemoveLinks(options: RemoveLinksQuery): Promise<void> {
+			return callDevice("/downloadsV2/removeLinks", options);
+		},
+		async downloadsForceDownload(
+			options: ForceDownloadQuery
+		): Promise<void> {
+			return callDevice("/downloadsV2/forceDownload", options);
+		},
+		async downloadsCleanup(options: CleanupQuery): Promise<void> {
+			return callDevice("/downloadsV2/cleanup", options);
+		},
+		async downloadsMovePackages(options: MovePackagesQuery): Promise<void> {
+			return callDevice("/downloadsV2/movePackages", options);
+		},
+		async downloadsSetPriority(options: SetPriorityQuery): Promise<void> {
+			return callDevice("/downloadsV2/setPriority", options);
+		},
+
+		// ### /linkgrabberv2 methods ###
+		async linkGrabberMoveToDownloadlist(
+			options: MoveToDownloadlistQuery = {}
+		): Promise<void> {
+			return callDevice("/linkgrabberv2/moveToDownloadlist", options);
+		},
+		async linkGrabberClearList(): Promise<void> {
+			return callDevice("/linkgrabberv2/clearList");
+		},
+		async linkGrabberRemoveLinks(options: RemoveLinksQuery): Promise<void> {
+			return callDevice("/linkgrabberv2/removeLinks", options);
+		},
+		async linkGrabberStartDownloads(
+			options: StartDownloadsQuery = {}
+		): Promise<void> {
+			return callDevice("/linkgrabberv2/startDownloads", options);
+		},
+		async linkGrabberSetEnabled(options: SetEnabledQuery): Promise<void> {
+			return callDevice("/linkgrabberv2/setEnabled", options);
+		},
+
+		// ### /system methods ###
+		async getSystemInfos(): Promise<SystemInfos> {
+			return callDevice("/system/getSystemInfos");
+		},
+		async getStorageInfos(path: string = "/"): Promise<StorageInfo[]> {
+			return callDevice("/system/getStorageInfos", { path });
+		},
+		async restartJD(): Promise<void> {
+			return callDevice("/system/restartJD");
+		},
+		async shutdownOS(): Promise<void> {
+			return callDevice("/system/shutdownOS");
 		},
 	} as const;
 }
