@@ -7,6 +7,7 @@ import {
 	uniqueRid,
 } from "./Crypto";
 import { ConnectResponse } from "./ResponseStructures";
+import { createSerialExecutionEnvironment } from "./SerialExecution";
 
 const MYJDOWNLOADER_ENDPOINT = "https://api.jdownloader.org";
 
@@ -15,6 +16,7 @@ export interface ConnectParams {
 	password: string;
 	appKey?: string;
 	apiVer?: number;
+	delayMs?: number;
 }
 
 export default async function createCallServerEnvironment({
@@ -22,7 +24,12 @@ export default async function createCallServerEnvironment({
 	password,
 	appKey,
 	apiVer,
-}: Required<ConnectParams>) {
+	serialExecutionEnvironment,
+}: Omit<Required<ConnectParams>, "delayMs"> & {
+	serialExecutionEnvironment: ReturnType<
+		typeof createSerialExecutionEnvironment
+	>;
+}) {
 	const [loginSecret, deviceSecret] = await Promise.all([
 		sha256ByString(`${email}${password}server`),
 		sha256ByString(`${email}${password}device`),
@@ -66,20 +73,24 @@ export default async function createCallServerEnvironment({
 				new TextEncoder().encode(path)
 			)
 		);
-		const response = await fetch(
-			`${MYJDOWNLOADER_ENDPOINT}${path}&signature=${signature}`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json; charset=utf-8",
-				},
+		return serialExecutionEnvironment(async () => {
+			const response = await fetch(
+				`${MYJDOWNLOADER_ENDPOINT}${path}&signature=${signature}`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json; charset=utf-8",
+					},
+				}
+			);
+			if (response.ok) {
+				return decryptAndvalidate(await response.text(), key, rid);
+			} else {
+				throw new Error(`${response.status}: ${response.statusText}`, {
+					cause: await response.json(),
+				});
 			}
-		);
-		if (response.ok) {
-			return decryptAndvalidate(await response.text(), key, rid);
-		} else {
-			throw new TypeError(await response.text());
-		}
+		});
 	}
 
 	return {
@@ -129,37 +140,37 @@ export default async function createCallServerEnvironment({
 						}),
 						deviceEncryptionToken
 					);
-					const response = await fetch(
-						`${MYJDOWNLOADER_ENDPOINT}/t_${encodeURI(
-							sessionToken
-						)}_${encodeURI(deviceId)}${query}`,
-						{
-							method: "POST",
-							headers: {
-								"Content-Type":
-									"application/json; charset=utf-8",
-							},
-							body,
-						}
-					);
-					if (response.ok) {
-						return (
-							await decryptAndvalidate(
-								await response.text(),
-								deviceEncryptionToken,
-								rid
-							)
-						).data;
-					} else {
-						throw new TypeError(
-							await decrypt(
-								(
-									await response.json()
-								).message,
-								deviceEncryptionToken
-							)
+					return serialExecutionEnvironment(async () => {
+						const response = await fetch(
+							`${MYJDOWNLOADER_ENDPOINT}/t_${encodeURI(
+								sessionToken
+							)}_${encodeURI(deviceId)}${query}`,
+							{
+								method: "POST",
+								headers: {
+									"Content-Type":
+										"application/json; charset=utf-8",
+								},
+								body,
+							}
 						);
-					}
+						if (response.ok) {
+							return (
+								await decryptAndvalidate(
+									await response.text(),
+									deviceEncryptionToken,
+									rid
+								)
+							).data;
+						} else {
+							throw new Error(
+								`${response.status}: ${response.statusText}`,
+								{
+									cause: await response.json(),
+								}
+							);
+						}
+					});
 				},
 			} as const;
 		},
@@ -173,7 +184,7 @@ async function decryptAndvalidate(
 ): Promise<any> {
 	const result = JSON.parse(await decrypt(data, ivKey));
 	if (result.rid !== rid) {
-		throw new TypeError("Invalid response");
+		throw new Error("Invalid response");
 	}
 	return result;
 }
