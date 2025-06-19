@@ -19,6 +19,19 @@ export interface ConnectParams {
 	delayMs?: number;
 }
 
+// ############# MODIFIED: Export this function #############
+export async function decryptAndvalidate(
+	data: string,
+	ivKey: ArrayBuffer,
+	rid: number
+): Promise<any> {
+	const result = JSON.parse(await decrypt(data, ivKey));
+	if (result.rid !== rid) {
+		throw new Error("Invalid response");
+	}
+	return result;
+}
+
 export default async function createCallServerEnvironment({
 	email,
 	password,
@@ -174,17 +187,49 @@ export default async function createCallServerEnvironment({
 				},
 			} as const;
 		},
+		// ############# NEWLY ADDED #############
+		createCallDeviceDirectEnvironment(endpoint: string) {
+			return {
+				async callDeviceDirect(
+					query: string,
+					params?: unknown
+				): Promise<any> {
+					const rid = uniqueRid();
+					const body = await encrypt(
+						JSON.stringify({
+							apiVer,
+							rid,
+							url: query,
+							...(params != null
+								? { params: [JSON.stringify(params)] }
+								: {}),
+						}),
+						deviceEncryptionToken
+					);
+					const response = await fetch(`${endpoint}${query}`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json; charset=utf-8",
+						},
+						body,
+					});
+					if (response.ok) {
+						return (
+							await decryptAndvalidate(
+								await response.text(),
+								deviceEncryptionToken,
+								rid
+							)
+						).data;
+					} else {
+						throw new Error(
+							`${response.status}: ${response.statusText}`,
+							{ cause: await response.json() }
+						);
+					}
+				},
+			} as const;
+		},
+		// ############# END OF NEWLY ADDED #############
 	} as const;
-}
-
-async function decryptAndvalidate(
-	data: string,
-	ivKey: ArrayBuffer,
-	rid: number
-): Promise<any> {
-	const result = JSON.parse(await decrypt(data, ivKey));
-	if (result.rid !== rid) {
-		throw new Error("Invalid response");
-	}
-	return result;
 }
