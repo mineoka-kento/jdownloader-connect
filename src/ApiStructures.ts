@@ -144,6 +144,7 @@ export const PRIORITY = {
 	LOWEST: "LOWEST",
 } as const;
 export type Priority = (typeof PRIORITY)[keyof typeof PRIORITY];
+
 export const AVAILABLE_LINK_STATE = {
 	ONLINE: "ONLINE",
 	OFFLINE: "OFFLINE",
@@ -215,4 +216,95 @@ export interface FilePackage {
 	status?: string;
 	statusIconKey?: string;
 	uuid?: number;
+}
+
+export const CLEANUP_ACTION = {
+	DELETE_DISABLED_LINKS: "DELETE_DISABLED_LINKS",
+	DELETE_FAILED_LINKS: "DELETE_FAILED_LINKS",
+	DELETE_FINISHED_LINKS: "DELETE_FINISHED_LINKS",
+	DELETE_OFFLINE_LINKS: "DELETE_OFFLINE_LINKS",
+	DELETE_ALL_LINKS: "DELETE_ALL_LINKS",
+	RECYCLE_DISABLED_LINKS: "RECYCLE_DISABLED_LINKS",
+	RECYCLE_FAILED_LINKS: "RECYCLE_FAILED_LINKS",
+	RECYCLE_FINISHED_LINKS: "RECYCLE_FINISHED_LINKS",
+	RECYCLE_OFFLINE_LINKS: "RECYCLE_OFFLINE_LINKS",
+	RECYCLE_ALL_LINKS: "RECYCLE_ALL_LINKS",
+} as const;
+export type CleanupAction =
+	(typeof CLEANUP_ACTION)[keyof typeof CLEANUP_ACTION];
+
+export const SELECTION_TYPE = {
+	ALL: "ALL",
+	SELECTED: "SELECTED",
+	UNSELECTED: "UNSELECTED",
+	VISIBLE: "VISIBLE",
+} as const;
+export type SelectionType =
+	(typeof SELECTION_TYPE)[keyof typeof SELECTION_TYPE];
+
+export interface SystemInfos {
+	osName: string;
+	osVersion: string;
+	osArch: string;
+	javaVersion: string;
+	javaVendor: string;
+	javaVMName: string;
+	javaVMVersion: string;
+	headLess: boolean;
+	jre: string;
+}
+
+export interface StorageInfo {
+	path: string;
+	size: number;
+	free: number;
+	isFileSystem: boolean;
+}
+
+export interface RemoveLinksQuery {
+	linkIds?: number[];
+	packageIds?: number[];
+}
+
+export interface ForceDownloadQuery {
+	linkIds?: number[];
+	packageIds?: number[];
+}
+
+export interface SetEnabledQuery {
+	enabled: boolean;
+	linkIds?: number[];
+	packageIds?: number[];
+}
+
+export interface MoveToDownloadlistQuery {
+	linkIds?: number[];
+	packageIds?: number[];
+}
+
+export interface StartDownloadsQuery {
+	linkIds?: number[];
+	packageIds?: number[];
+}
+
+export interface MovePackagesQuery {
+	packageIds: number[];
+	afterDestPackageId: number;
+}
+
+export interface SetPriorityQuery {
+	priority: Priority;
+	linkIds?: number[];
+	packageIds?: number[];
+}
+
+export interface CleanupQuery {
+	linkIds?: number[];
+	packageIds?: number[];
+	action?: CleanupAction;
+	mode?:
+		| "REMOVE_LINKS_ONLY"
+		| "REMOVE_LINKS_AND_DELETE_FILES"
+		| "REMOVE_LINKS_AND_RECYCLE_FILES";
+	selector?: SelectionType;
 }
