@@ -1,4 +1,4 @@
-import {
+import type {
 	LinkQuery,
 	DownloadLink,
 	CrawledLinkQuery,
@@ -9,9 +9,10 @@ import {
 	PackageQuery,
 	FilePackage,
 } from ".";
-import createCallServerEnvironment, { ConnectParams } from "./Connection";
+import type createCallServerEnvironment from "./Connection";
+import type { ConnectParams } from "./Connection";
 import { createEncryptionToken } from "./Crypto";
-import {
+import type {
 	ConnectResponse,
 	DeviceBase,
 	ListDevicesResponse,

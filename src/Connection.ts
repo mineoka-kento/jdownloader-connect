@@ -6,7 +6,7 @@ import {
 	sha256ByString,
 	uniqueRid,
 } from "./Crypto";
-import { ConnectResponse } from "./ResponseStructures";
+import type { ConnectResponse } from "./ResponseStructures";
 import { createSerialExecutionEnvironment } from "./SerialExecution";
 
 const MYJDOWNLOADER_ENDPOINT = "https://api.jdownloader.org";
