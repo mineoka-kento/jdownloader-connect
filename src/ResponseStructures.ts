@@ -1,4 +1,4 @@
-import { DeviceStatus } from "./ApiStructures";
+import type { DeviceStatus } from "./ApiStructures";
 
 export interface ConnectResponse {
 	sessiontoken: string;

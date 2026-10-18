@@ -1,54 +1,60 @@
 {
-  "name": "jdownloader-connect",
-  "version": "1.0.9",
-  "description": "JDownloader client for Node.js and Browser, written in TypeScript.",
-  "keywords": [
-    "jdownloader",
-    "jdownloader2",
-    "typescript",
-    "nodejs",
-    "browser"
-  ],
-  "author": "costeka",
-  "license": "MIT",
-  "homepage": "https://github.com/mineoka-kento/jdownloader-connect?tab=readme-ov-file#readme-ov-file",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mineoka-kento/jdownloader-connect.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mineoka-kento/jdownloader-connect/issues"
-  },
-  "files": [
-    "dist",
-    "package.json"
-  ],
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
-    }
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "type": "module",
-  "scripts": {
-    "build": "tsup",
-    "tsc": "tsc"
-  },
-  "devDependencies": {
-    "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
-  },
-  "packageManager": "yarn@4.9.1"
+	"name": "jdownloader-connect",
+	"version": "1.1.0",
+	"description": "JDownloader client for Node.js and Browser, written in TypeScript.",
+	"keywords": [
+		"browser",
+		"jdownloader",
+		"jdownloader2",
+		"nodejs",
+		"typescript"
+	],
+	"homepage": "https://github.com/mineoka-kento/jdownloader-connect?tab=readme-ov-file#readme-ov-file",
+	"bugs": {
+		"url": "https://github.com/mineoka-kento/jdownloader-connect/issues"
+	},
+	"license": "MIT",
+	"author": "costeka",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mineoka-kento/jdownloader-connect.git"
+	},
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"sideEffects": false,
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
+			},
+			"require": {
+				"types": "./dist/index.d.cts",
+				"default": "./dist/index.cjs"
+			}
+		}
+	},
+	"scripts": {
+		"build": "vp pack",
+		"dev": "vp pack --watch",
+		"check": "vp check",
+		"check:fix": "vp check --fix",
+		"test": "vp test",
+		"check:package": "publint --strict && attw --pack ."
+	},
+	"devDependencies": {
+		"@arethetypeswrong/cli": "^0.18.5",
+		"publint": "^0.3.25",
+		"typescript": "^7.0.2",
+		"vite-plus": "catalog:"
+	},
+	"engines": {
+		"node": ">=22.0.0"
+	},
+	"packageManager": "pnpm@12.14.0"
 }

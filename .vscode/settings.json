@@ -1,8 +1,23 @@
 {
-  "search.exclude": {
-    "**/.yarn": true,
-    "**/.pnp.*": true
-  },
-  "typescript.tsdk": ".yarn/sdks/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+	"editor.defaultFormatter": "oxc.oxc-vscode",
+	"[javascript]": {
+		"editor.defaultFormatter": "oxc.oxc-vscode"
+	},
+	"[javascriptreact]": {
+		"editor.defaultFormatter": "oxc.oxc-vscode"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "oxc.oxc-vscode"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "oxc.oxc-vscode"
+	},
+	"oxc.disableNestedConfig": true,
+	"oxc.fmt.disableNestedConfig": true,
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "file",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.oxc": "explicit"
+	},
+	"js/ts.experimental.useTsgo": true
 }

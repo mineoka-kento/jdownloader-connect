@@ -1,5 +1,5 @@
-import { createMyJDownloaderApis, MyJDownloaderApis } from "./ApiCreators";
-import createCallServerEnvironment, { ConnectParams } from "./Connection";
+import { createMyJDownloaderApis, type MyJDownloaderApis } from "./ApiCreators";
+import createCallServerEnvironment, { type ConnectParams } from "./Connection";
 import { createSerialExecutionEnvironment } from "./SerialExecution";
 
 export * from "./ApiStructures";
