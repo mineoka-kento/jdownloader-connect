@@ -155,9 +155,9 @@ Queries active/completed downloads.
 ## ⚙️ Requirements
 
 - **Node.js**: 22.0.0 or higher
-- **Browser**: Modern browsers with Web Crypto API support
-    - Chrome 63+, Firefox 57+, Safari 11.1+, Edge 79+
-    - Requires HTTPS context for Web Crypto API usage
+- **Browser**: Chrome 111+, Edge 111+, Firefox 114+, Safari 16.4+ ([Baseline Widely Available](https://web.dev/baseline))
+    - Older browsers may work if your bundler transpiles dependencies and provides polyfills, but the **Web Crypto API** (`crypto.subtle`) is required and cannot be polyfilled.
+    - Requires a secure context (HTTPS) for the Web Crypto API.
 
 ### Platform Compatibility Details
 

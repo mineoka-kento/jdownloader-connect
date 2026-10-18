@@ -7,7 +7,15 @@ export default defineConfig({
 		dts: true,
 		sourcemap: true,
 		clean: true,
-		target: false,
+		// README の動作要件に合わせる (Node.js 22 / Baseline Widely Available)
+		target: [
+			"node22",
+			"chrome111",
+			"edge111",
+			"firefox114",
+			"safari16.4",
+			"ios16.4",
+		],
 		// 既存の exports (index.js / index.d.ts) と互換性を保つ
 		fixedExtension: false,
 		outputOptions: { exports: "named" },
